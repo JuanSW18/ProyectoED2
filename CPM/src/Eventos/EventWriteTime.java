@@ -5,7 +5,7 @@
  */
 package Eventos;
 
-import cpm.Actividad;
+import cpm_interfaz.Actividad;
 import javafx.event.EventHandler;
 import javafx.scene.control.TableColumn.CellEditEvent;
 

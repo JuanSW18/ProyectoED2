@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cpm;
+package cpm_interfaz;
 
 /**
  *
@@ -28,8 +28,8 @@ public class Actividad {
     
     public String getData(){
         return "Actividad : " + nombre +
-                "tiempo : " + tiempo +
-                "Descripcion: " + precedentes;
+                "\ttiempo : " + tiempo +
+                "\tDescripcion: " + precedentes;
     }
 
     public String getNombre() {

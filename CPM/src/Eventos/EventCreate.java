@@ -5,7 +5,7 @@
  */
 package Eventos;
 
-import cpm.Actividad;
+import cpm_interfaz.Actividad;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
@@ -43,5 +43,5 @@ public class EventCreate implements EventHandler<MouseEvent>{
             alert.showAndWait();
         }
     }
-    
+
 }

@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cpm;
+package cpm_interfaz;
 
 import Eventos.EventCreate;
+import Eventos.EventNewTxt;
+import Eventos.EventWriteDes;
 import Eventos.EventWriteN;
+import Eventos.EventWriteTime;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -29,10 +32,9 @@ import javafx.stage.Stage;
  *
  * @author Seven
  */
-public class CPM extends Application {
+public class CPM_Interfaz extends Application {
     
     TableView<Actividad> table;
-    int num_col=0;
     
     @Override
     public void start(Stage primaryStage) {
@@ -44,18 +46,16 @@ public class CPM extends Application {
         tx_title.setFill(Color.WHITESMOKE);
         tx_title.setFont(Font.font(null, FontWeight.BOLD, 13));
         
-        TextField tf_colum = new TextField();
-        tf_colum.setPrefHeight(5);
-        tf_colum.setFocusTraversable(false);
+        TextField tf_filas = new TextField();
+        tf_filas.setPrefHeight(5);
+        tf_filas.setFocusTraversable(false);
         
         Button btn_create = new Button("Crear");
         btn_create.setFocusTraversable(false);
         
-        
         grid_uno.add(tx_title, 0, 0);
-        grid_uno.add(tf_colum, 1, 0);
+        grid_uno.add(tf_filas, 1, 0);
         grid_uno.add(btn_create, 2, 0);
-        
         
         
         /*-----------Contenedor Interno 2----------*/
@@ -67,26 +67,27 @@ public class CPM extends Application {
         table.setEditable(true);
         //table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
-        btn_create.setOnMousePressed(new EventCreate(tf_colum, table));     
+        btn_create.setOnMousePressed(new EventCreate(tf_filas, table));     
         aux();
         
         //linea de  prueba
-        Button btn_mostrar = new Button("Ejecutar");
-        btn_mostrar.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                for(int i=0; i<Integer.parseInt(tf_colum.getText()); i++)
-                    if("".equals(table.getItems().get(i).getData()))
-                        System.out.println("null");
-                    else
-                        System.out.println(table.getItems().get(i).getData());
-                System.out.println("------FIN------");
-            }
-        });
+        Button btn_ejecutar = new Button("Ejecutar");
+        btn_ejecutar.setOnMouseClicked(new EventNewTxt(table, tf_filas));
+        /*        btn_ejecutar.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent e) {
+        for(int i=0; i<Integer.parseInt(tf_filas.getText()); i++)
+        if("".equals(table.getItems().get(i).getData()))
+        System.out.println("null");
+        else
+        System.out.println(table.getItems().get(i).getData());
+        System.out.println("------FIN------");
+        }
+        });*/
         //fin de linea de prueba
         
         grid_dos.add(table, 0, 0);
-        grid_dos.add(btn_mostrar, 0, 1);
+        grid_dos.add(btn_ejecutar, 0, 1);
         
         
         /*-----------Contenedor Principal----------*/
@@ -114,12 +115,13 @@ public class CPM extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+        
     }
     
     public void aux(){
         TableColumn<Actividad, String> colId = new TableColumn<>("Nro");
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colId.setCellFactory(TextFieldTableCell.forTableColumn());
+        //colId.setCellFactory(TextFieldTableCell.forTableColumn());
         colId.setMinWidth(100);
         colId.setSortable(false);
         
@@ -135,13 +137,13 @@ public class CPM extends Application {
         colTime.setCellValueFactory(new PropertyValueFactory<>("tiempo"));
         colTime.setCellFactory(TextFieldTableCell.forTableColumn());
         colTime.setMinWidth(80);
-        colTime.setOnEditCommit(new EventWriteN()); //Evento para escritura
+        colTime.setOnEditCommit(new EventWriteTime()); //Evento para escritura
         
         TableColumn<Actividad, String> colDesc = new TableColumn<>("Precedencia de Actividades");
         colDesc.setCellValueFactory(new PropertyValueFactory<>("descrip"));
         colDesc.setCellFactory(TextFieldTableCell.forTableColumn());
         colDesc.setMinWidth(200);
-        colDesc.setOnEditCommit(new EventWriteN()); //Evento para escritura
+        colDesc.setOnEditCommit(new EventWriteDes()); //Evento para escritura
         
         table.getColumns().addAll(colId, colNombre, colTime, colDesc);
     }
