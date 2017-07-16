@@ -17,6 +17,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
@@ -66,7 +67,7 @@ public class EventOutput implements EventHandler<MouseEvent> {
         g2.add(txt, 0, 0);
         g2.add(tf_dur, 1, 0);
         
-        Button btn_imprimir = new Button("Imprimir");
+        Button btn_imprimir = new Button("Imprimir", new ImageView(new Image("Recursos/print_24.png")));
         
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
