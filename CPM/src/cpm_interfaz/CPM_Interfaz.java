@@ -6,7 +6,7 @@
 package cpm_interfaz;
 
 import Eventos.EventCreate;
-import Eventos.EventNewTxt;
+import Eventos.EventOutput;
 import Eventos.EventWriteDes;
 import Eventos.EventWriteN;
 import Eventos.EventWriteTime;
@@ -19,6 +19,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -33,6 +34,7 @@ import javafx.stage.Stage;
 public class CPM_Interfaz extends Application {
     
     TableView<Actividad> table;
+    TableView<Respuesta> respuesta = new TableView<>();
     
     @Override
     public void start(Stage primaryStage) {
@@ -68,21 +70,8 @@ public class CPM_Interfaz extends Application {
         btn_create.setOnMousePressed(new EventCreate(tf_filas, table));     
         aux();
         
-        //linea de  prueba
         Button btn_ejecutar = new Button("Ejecutar");
-        btn_ejecutar.setOnMouseClicked(new EventNewTxt(table, tf_filas));
-        /*        btn_ejecutar.setOnMouseClicked(new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent e) {
-        for(int i=0; i<Integer.parseInt(tf_filas.getText()); i++)
-        if("".equals(table.getItems().get(i).getData()))
-        System.out.println("null");
-        else
-        System.out.println(table.getItems().get(i).getData());
-        System.out.println("------FIN------");
-        }
-        });*/
-        //fin de linea de prueba
+        btn_ejecutar.setOnMouseClicked(new EventOutput(table, tf_filas, respuesta));
         
         grid_dos.add(table, 0, 0);
         grid_dos.add(btn_ejecutar, 0, 1);
@@ -102,7 +91,8 @@ public class CPM_Interfaz extends Application {
         
         primaryStage.setTitle("Critical Path Method");
         primaryStage.setScene(scene);
-        //primaryStage.setResizable(false);
+        primaryStage.getIcons().add(new Image("Recursos/gantt_24.png"));
+        primaryStage.setResizable(false);
         primaryStage.show();
         
         grid.setStyle("-fx-background-color: black");
@@ -127,7 +117,7 @@ public class CPM_Interfaz extends Application {
         TableColumn<Actividad, String> colNombre = new TableColumn<>("Actividad");
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colNombre.setCellFactory(TextFieldTableCell.forTableColumn());
-        colNombre.setMinWidth(200);colNombre.setOnEditCommit(new EventWriteN()); //Evento para escr
+        colNombre.setMinWidth(200);
         colNombre.setOnEditCommit(new EventWriteN()); //Evento para escritura
         
         

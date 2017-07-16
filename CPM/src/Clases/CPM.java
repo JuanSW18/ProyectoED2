@@ -26,6 +26,7 @@
 package clases;
 
 import cpm_interfaz.Actividad;
+import cpm_interfaz.Respuesta;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
@@ -39,8 +40,10 @@ public class CPM {
    E imprime una programación factible hacia la salida estándar.
      * @param actividades
      * @param tabla
+     * @param resp
+     * @param d
      */
-    public void FuncionCPM(TextField actividades, TableView<Actividad> tabla) {
+    public void FuncionCPM(TextField actividades, TableView<Actividad> tabla, TableView<Respuesta> resp, TextField d) {
         
         // número de puestos de trabajo
         int N = Integer.parseInt(actividades.getText());
@@ -48,14 +51,16 @@ public class CPM {
         // fuente y sumidero
         int inicio = 2*N;
         int fin   = 2*N + 1;
-
+        
+        //almacenar nombres de actividad
+        String[] names = new String[N];
+        
         // crear red
         DigrafoAristaPonderada G = new DigrafoAristaPonderada(2*N + 2);
         for (int i = 0; i < N; i++) {
-            System.out.println("ITERACION " + i);
-            //double duracion = StdIn.readDouble();
+            names[i] = tabla.getItems().get(i).getNombre();
+            
             double dur = Double.parseDouble(tabla.getItems().get(i).getTiempo());
-            System.out.println("2.-el valor de duracion es: " + dur);
             G.agregarArista(new AristaDirigida(inicio, i, 0.0));
             G.agregarArista(new AristaDirigida(i+N, fin, 0.0));
             G.agregarArista(new AristaDirigida(i, i+N,    dur));
@@ -67,17 +72,10 @@ public class CPM {
                 int[] lista_pre = new int[lista.length];
                 for (int j = 0; j < lista_pre.length; j++) {
                     lista_pre[j] = Integer.parseInt(lista[j]);
-                    System.out.print(lista_pre[j] + " ");
                 }
-                System.out.println("");
                 // restricciones de precedencia
-                //int M = StdIn.readInt();
                 int m = lista_pre.length;
-                System.out.println("3.-el valor de M es: " + m);
                 for (int j = 0; j < m; j++) {
-                    //int precedente = StdIn.readInt();
-                    //G.agregarArista(new AristaDirigida(N+i, precedente, 0.0));
-                    System.out.println("4.-el valor de precedente es: " + lista_pre[j]);
                     G.agregarArista(new AristaDirigida(N + i, lista_pre[j], 0.0));
                 }
             }
@@ -85,15 +83,12 @@ public class CPM {
 
         // calcular la ruta más larga
         LPAciclico cml = new LPAciclico(G, inicio);
-
-        // imprimir resultados
-        StdOut.println(" Actividad   inicio  fin");
-        StdOut.println("------------------------");
+        
         for (int i = 0; i < N; i++) {
-            StdOut.printf("%4d %7.3f %7.3f\n", i, cml.distanciaHacia(i),
-                    cml.distanciaHacia(i+N));
+            resp.getItems().add(new Respuesta(String.valueOf(i), names[i], String.valueOf(cml.distanciaHacia(i)), String.valueOf(cml.distanciaHacia(i+N))));
         }
-        StdOut.printf("Tiempo de terminación: %7.3f\n", cml.distanciaHacia(fin));
+        d.setText(String.valueOf(cml.distanciaHacia(fin)));
+        //StdOut.printf("Tiempo de terminación: %7.3f\n", cml.distanciaHacia(fin));
     }
        
 

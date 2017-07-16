@@ -32,7 +32,7 @@ public class EventCreate implements EventHandler<MouseEvent>{
         try{
             num = Integer.parseInt(aux.getText());
             for(int i=0; i<num; i++)
-                tb_aux.getItems().add(new Actividad(String.valueOf(i+1), "", "", ""));
+                tb_aux.getItems().add(new Actividad(String.valueOf(i), "", "", ""));
             
         }catch(NumberFormatException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);

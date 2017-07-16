@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
  *
  * @author Seven
  */
-public class EventGantt implements EventHandler<MouseEvent>{
+public class EventImprimir implements EventHandler<MouseEvent>{
 
     @Override
     public void handle(MouseEvent event) {
