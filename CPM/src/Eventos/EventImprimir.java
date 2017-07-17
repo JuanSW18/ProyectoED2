@@ -8,10 +8,12 @@ package Eventos;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import cpm_interfaz.Respuesta;
@@ -88,26 +90,47 @@ public class EventImprimir implements EventHandler<MouseEvent>{
             Paragraph saltolinea1 = new Paragraph();
             saltolinea1.add("\n\n");
             documento.add(saltolinea1);
+            
             PdfPTable tabla = new PdfPTable(4);
+            tabla.setHorizontalAlignment(Element.ALIGN_CENTER);
             tabla.setWidthPercentage(100);
             tabla.setWidths(new float[]{30, 30, 30, 30});
 
-            Paragraph col1 = new Paragraph("N° de Actividades");
+            Paragraph col1 = new Paragraph("N° de Actividades", FontFactory.getFont("arial", 11, BaseColor.WHITE));
             col1.getFont().setStyle(Font.BOLD);
             col1.getFont().setSize(10);
-            tabla.addCell(col1);
-            Paragraph col2 = new Paragraph("Nombre de Actividad");
+            
+            PdfPCell celda1 = new PdfPCell(col1);
+            celda1.setBackgroundColor(BaseColor.BLACK);
+            celda1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            tabla.addCell(celda1);
+
+            Paragraph col2 = new Paragraph("Nombre de Actividad", FontFactory.getFont("arial", 11, BaseColor.WHITE));
             col2.getFont().setStyle(Font.BOLD);
             col2.getFont().setSize(10);
-            tabla.addCell(col2);
-            Paragraph col3 = new Paragraph("Tiempo de inicio");
+
+            PdfPCell celda2 = new PdfPCell(col2);
+            celda2.setBackgroundColor(BaseColor.BLACK);
+            celda2.setHorizontalAlignment(Element.ALIGN_CENTER);
+            tabla.addCell(celda2);
+
+            Paragraph col3 = new Paragraph("Tiempo de inicio", FontFactory.getFont("arial", 11, BaseColor.WHITE));
             col3.getFont().setStyle(Font.BOLD);
             col3.getFont().setSize(10);
-            tabla.addCell(col3);
-            Paragraph col4 = new Paragraph("Tiempo final");
+
+            PdfPCell celda3 = new PdfPCell(col3);
+            celda3.setBackgroundColor(BaseColor.BLACK);
+            celda3.setHorizontalAlignment(Element.ALIGN_CENTER);
+            tabla.addCell(celda3);
+
+            Paragraph col4 = new Paragraph("Tiempo final", FontFactory.getFont("arial", 11, BaseColor.WHITE));
             col4.getFont().setStyle(Font.BOLD);
             col4.getFont().setSize(10);
-            tabla.addCell(col4);
+
+            PdfPCell celda4 = new PdfPCell(col4);
+            celda4.setBackgroundColor(BaseColor.BLACK);
+            celda4.setHorizontalAlignment(Element.ALIGN_CENTER);
+            tabla.addCell(celda4);
             //agregar los datos a la tabla
             for (int i = 0; i < tareas.size(); i++) {
                 tabla.addCell(tareas.get(i).getNum_act());
