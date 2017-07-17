@@ -68,6 +68,7 @@ public class EventOutput implements EventHandler<MouseEvent> {
         g2.add(tf_dur, 1, 0);
         
         Button btn_imprimir = new Button("Imprimir", new ImageView(new Image("Recursos/print_24.png")));
+        btn_imprimir.setOnMouseClicked(new EventImprimir(tabla_resp, tf_filas, tf_dur));
         
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);

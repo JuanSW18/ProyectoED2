@@ -15,6 +15,10 @@ public class Respuesta {
     String tiempo_inicio;
     String tiempo_final;
 
+    public Respuesta() {
+        
+    }
+    
     public Respuesta(String num_filas, String acti, String t_inicio, String t_final) {
         this.num_act = num_filas;
         this.actividad = acti;
