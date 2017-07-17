@@ -58,7 +58,9 @@ public class Bolsa<Item> implements Iterable<Item> {
      * Devuelve un iterador que itera sobre los elementos de esta bolsa en orden arbitrario.
       *
       * @return un iterador que itera sobre los artículos en esta bolsa en orden arbitrario
+     * @return 
      */
+    @Override
     public Iterator<Item> iterator()  {
         return new IteradorDeLista<Item>(primero);  
     }
@@ -71,9 +73,12 @@ public class Bolsa<Item> implements Iterable<Item> {
             actual = primero;
         }
 
+        @Override
         public boolean hasNext()  { return actual != null;                    }
+        @Override
         public void remove()      { throw new UnsupportedOperationException();}
 
+        @Override
         public Item next() {
             if (!hasNext()) throw new NoSuchElementException();
             Item item = actual.item;

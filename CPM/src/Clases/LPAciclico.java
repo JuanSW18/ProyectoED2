@@ -22,6 +22,8 @@
 
 package clases;
 
+import javafx.scene.control.Alert;
+
 public class LPAciclico {
     private double[] distanciaHacia;          // distanciaHacia[v] = distance  of longest s->v path
     private AristaDirigida[] aristaHacia;    // edgeTo[v] = last edge on longest s->v path
@@ -43,11 +45,23 @@ public class LPAciclico {
 
         // relax vertices in toplogical orden
         Topologico topological = new Topologico(G);
-        if (!topological.tieneOrden())
-            throw new IllegalArgumentException("El dígrafo no es acíclico.");
-        for (int v : topological.orden()) {
-            for (AristaDirigida a : G.ady(v))
-                relajar(a);
+        try{
+            if (!topological.tieneOrden()) {
+                //throw new IllegalArgumentException("El dígrafo no es acíclico.");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText("El digrafo no es aciclico");
+                alert.setContentText(null);
+                alert.setResizable(false);
+                alert.showAndWait();
+            }
+            for (int v : topological.orden()) {
+                for (AristaDirigida a : G.ady(v)) {
+                    relajar(a);
+                }
+            }
+        }catch(Exception e){
+            System.out.println("Error LPAciclico");
         }
     }
 

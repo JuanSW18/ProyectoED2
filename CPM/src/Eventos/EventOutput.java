@@ -49,10 +49,14 @@ public class EventOutput implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event){
-        CrearTabla();
-        CPM funcion = new CPM();
-        funcion.FuncionCPM(tf_filas, aux, tabla_resp, tf_dur);
-        VentanaRespuesta();
+        try{
+            CrearTabla();
+            CPM funcion = new CPM();
+            funcion.FuncionCPM(tf_filas, aux, tabla_resp, tf_dur);
+            VentanaRespuesta();
+        }catch(Exception e){
+            System.out.println("No se genero respuesta por error anterior");
+        }
     }
     
     public void VentanaRespuesta(){

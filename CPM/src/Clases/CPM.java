@@ -45,50 +45,54 @@ public class CPM {
      */
     public void FuncionCPM(TextField actividades, TableView<Actividad> tabla, TableView<Respuesta> resp, TextField d) {
         
-        // número de puestos de trabajo
-        int N = Integer.parseInt(actividades.getText());
+        try{
+            // número de puestos de trabajo
+            int N = Integer.parseInt(actividades.getText());
 
-        // fuente y sumidero
-        int inicio = 2*N;
-        int fin   = 2*N + 1;
-        
-        //almacenar nombres de actividad
-        String[] names = new String[N];
-        
-        // crear red
-        DigrafoAristaPonderada G = new DigrafoAristaPonderada(2*N + 2);
-        for (int i = 0; i < N; i++) {
-            names[i] = tabla.getItems().get(i).getNombre();
-            
-            double dur = Double.parseDouble(tabla.getItems().get(i).getTiempo());
-            G.agregarArista(new AristaDirigida(inicio, i, 0.0));
-            G.agregarArista(new AristaDirigida(i+N, fin, 0.0));
-            G.agregarArista(new AristaDirigida(i, i+N,    dur));
-            
-            String pres = tabla.getItems().get(i).getPrecedentes();
-            if(!pres.equals("")){
-                String[] lista = pres.split(",");
+            // fuente y sumidero
+            int inicio = 2 * N;
+            int fin = 2 * N + 1;
 
-                int[] lista_pre = new int[lista.length];
-                for (int j = 0; j < lista_pre.length; j++) {
-                    lista_pre[j] = Integer.parseInt(lista[j]);
-                }
-                // restricciones de precedencia
-                int m = lista_pre.length;
-                for (int j = 0; j < m; j++) {
-                    G.agregarArista(new AristaDirigida(N + i, lista_pre[j], 0.0));
+            //almacenar nombres de actividad
+            String[] names = new String[N];
+
+            // crear red
+            DigrafoAristaPonderada G = new DigrafoAristaPonderada(2 * N + 2);
+            for (int i = 0; i < N; i++) {
+                names[i] = tabla.getItems().get(i).getNombre();
+
+                double dur = Double.parseDouble(tabla.getItems().get(i).getTiempo());
+                G.agregarArista(new AristaDirigida(inicio, i, 0.0));
+                G.agregarArista(new AristaDirigida(i + N, fin, 0.0));
+                G.agregarArista(new AristaDirigida(i, i + N, dur));
+
+                String pres = tabla.getItems().get(i).getPrecedentes();
+                if (!pres.equals("")) {
+                    String[] lista = pres.split(",");
+
+                    int[] lista_pre = new int[lista.length];
+                    for (int j = 0; j < lista_pre.length; j++) {
+                        lista_pre[j] = Integer.parseInt(lista[j]);
+                    }
+                    // restricciones de precedencia
+                    int m = lista_pre.length;
+                    for (int j = 0; j < m; j++) {
+                        G.agregarArista(new AristaDirigida(N + i, lista_pre[j], 0.0));
+                    }
                 }
             }
-        }
 
-        // calcular la ruta más larga
-        LPAciclico cml = new LPAciclico(G, inicio);
-        
-        for (int i = 0; i < N; i++) {
-            resp.getItems().add(new Respuesta(String.valueOf(i), names[i], String.valueOf(cml.distanciaHacia(i)), String.valueOf(cml.distanciaHacia(i+N))));
+            // calcular la ruta más larga
+            LPAciclico cml = new LPAciclico(G, inicio);
+
+            for (int i = 0; i < N; i++) {
+                resp.getItems().add(new Respuesta(String.valueOf(i), names[i], String.valueOf(cml.distanciaHacia(i)), String.valueOf(cml.distanciaHacia(i + N))));
+            }
+            d.setText(String.valueOf(cml.distanciaHacia(fin)));
+            //StdOut.printf("Tiempo de terminación: %7.3f\n", cml.distanciaHacia(fin));
+        }catch(NumberFormatException e){
+            System.out.println("Error");
         }
-        d.setText(String.valueOf(cml.distanciaHacia(fin)));
-        //StdOut.printf("Tiempo de terminación: %7.3f\n", cml.distanciaHacia(fin));
     }
        
 
